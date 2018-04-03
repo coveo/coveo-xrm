@@ -1,0 +1,45 @@
+{
+  "name": "coveo-xrm",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [
+    "coveo",
+    "odata",
+    "client",
+    "js",
+    "typescript",
+    "xrm"
+  ],
+  "homepage": "https://github.com/coveo/coveo-xrm",
+  "main": "bin/js/coveo-xrm.js",
+  "types": "bin/js/src/Index.d.ts",
+  "scripts": {
+    "build": "webpack",
+    "test": "karma start --single-run",
+    "test:watch": "karma start",
+    "test:browser": "karma start --browsers=Chrome",
+    "publish": "npm publish --access=public"
+  },
+  "author": "Coveo",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jasmine": "^2.8.4",
+    "@types/xrm": "^9.0.3",
+    "coveo-odata": "0.0.3",
+    "istanbul-instrumenter-loader": "^3.0.0",
+    "jasmine": "3.1.0",
+    "jasmine-core": "3.1.0",
+    "karma": "^2.0.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage-istanbul-reporter": "^1.3.3",
+    "karma-jasmine": "^1.1.1",
+    "karma-junit-reporter": "^1.2.0",
+    "karma-spec-reporter": "0.0.32",
+    "karma-typescript": "^3.0.9",
+    "karma-webpack": "3.0.0",
+    "ts-loader": "4.1.0",
+    "typescript": "2.8.1",
+    "webpack": "4.4.1",
+    "webpack-cli": "2.0.13"
+  }
+}

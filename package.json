@@ -1,6 +1,6 @@
 {
   "name": "coveo-xrm",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
   "keywords": [
     "coveo",
@@ -11,7 +11,7 @@
     "xrm"
   ],
   "homepage": "https://github.com/coveo/coveo-xrm",
-  "main": "bin/js/coveo-xrm.js",
+  "main": "bin/js/coveo-xrm.min.js",
   "types": "bin/js/src/Index.d.ts",
   "scripts": {
     "build": "webpack",

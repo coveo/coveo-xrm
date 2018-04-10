@@ -5,8 +5,13 @@ export class NavigationV8 extends NullNavigation {
             if (!options && !options.entityName) {
                 reject(new Error("Cannot open form if entity name is undefined."));
             }
-            parent.Xrm.Utility.openQuickCreate(options.entityName, null, formParameters)
-                .then(() => resolve(), error => reject(error));
+            if (options.useQuickCreateForm) {
+                parent.Xrm.Utility.openQuickCreate(options.entityName, null, formParameters)
+                    .then(() => resolve(), error => reject(error));
+            } else {
+                parent.Xrm.Utility.openEntityForm(options.entityName, options.entityId, formParameters, { openInNewWindow: options.openInNewWindow });
+                resolve();
+            }
         });
     }
 

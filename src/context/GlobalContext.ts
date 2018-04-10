@@ -1,6 +1,9 @@
 import { OData } from "coveo-odata";
+import { IClientContext, NullClientContext, ClientContext } from "./ClientContext";
 
 export interface IGlobalContext {
+    client: IClientContext;
+
     getClientUrl(): string;
     getCrmVersion(): string;
     getCurrentAppUrl(): string;
@@ -8,6 +11,10 @@ export interface IGlobalContext {
 }
 
 export class NullGlobalContext implements IGlobalContext {
+    get client(): IClientContext {
+        return new NullClientContext();
+    }
+
     getClientUrl(): string {
         return "./";
     }
@@ -24,6 +31,10 @@ export class NullGlobalContext implements IGlobalContext {
 
 export class GlobalContext implements IGlobalContext {
     constructor(private context: Xrm.GlobalContext) {}
+
+    get client(): IClientContext {
+        return new ClientContext(this.context.client);
+    }
 
     getClientUrl(): string {
         return this.context.getClientUrl();

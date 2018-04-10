@@ -11,8 +11,10 @@ export interface IGlobalContext {
 }
 
 export class NullGlobalContext implements IGlobalContext {
+    clientContext = new NullClientContext();
+
     get client(): IClientContext {
-        return new NullClientContext();
+        return this.clientContext;
     }
 
     getClientUrl(): string {

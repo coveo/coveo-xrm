@@ -19,19 +19,21 @@ export class NullNavigation implements INavigation {
 }
 
 export class Navigation implements INavigation {
+    constructor(private xrm: Xrm.XrmStatic) {}
+
     openForm(options: Xrm.Navigation.EntityFormOptions, formParameters: Xrm.Utility.FormOpenParameters): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            Xrm.Navigation
+            this.xrm.Navigation
                 .openForm(options, formParameters)
                 .then(() => resolve(), error => reject(error));
         });
     }
 
     openUrl(url: string, openUrlOptions?: Xrm.Navigation.DialogSizeOptions): void {
-       Xrm.Navigation.openUrl(url, openUrlOptions);
+        this.xrm.Navigation.openUrl(url, openUrlOptions);
     }
 
     openWebResource(webResourceName: string, windowOptions?: Xrm.Navigation.OpenWebresourceOptions, data?: string): void {
-        Xrm.Navigation.openWebResource(webResourceName, windowOptions, data);
+        this.xrm.Navigation.openWebResource(webResourceName, windowOptions, data);
     }
 }

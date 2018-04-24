@@ -1,4 +1,4 @@
-import { OData } from "coveo-odata";
+import { OData, Batch } from "coveo-odata";
 import { IGlobalContext } from "./context/GlobalContext";
 
 export class WebApiService {
@@ -25,6 +25,13 @@ export class WebApiService {
                 { name: "OData-MaxVersion", value: "4.0" },
                 { name: "OData-Version", value: "4.0" }
             ]
+        });
+    }
+
+    initBatch() {
+        return new Batch({
+            endpoint: this.serviceEndpoint,
+            headers: []
         });
     }
 

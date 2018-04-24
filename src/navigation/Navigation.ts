@@ -23,7 +23,7 @@ export class Navigation implements INavigation {
 
     openForm(options: Xrm.Navigation.EntityFormOptions, formParameters: Xrm.Utility.FormOpenParameters): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this.xrm.Navigation
+            return this.xrm.Navigation
                 .openForm(options, formParameters)
                 .then(() => resolve(), error => reject(error));
         });

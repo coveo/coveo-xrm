@@ -1,4 +1,4 @@
-import { INavigation, NullNavigation } from "./Navigation";
+import { NullNavigation } from "./Navigation";
 export class NavigationV8 extends NullNavigation {
     constructor(private xrm: Xrm.XrmStatic) {
         super();
@@ -20,6 +20,6 @@ export class NavigationV8 extends NullNavigation {
     }
 
     openWebResource(webResourceName: string, windowOptions?: Xrm.Navigation.OpenWebresourceOptions, data?: string): void {
-        this.xrm.Utility.openWebResource(webResourceName, data, windowOptions ? windowOptions.width : null, windowOptions ? windowOptions.height : null)
+        this.xrm.Utility.openWebResource(webResourceName, data, windowOptions ? windowOptions.width : null, windowOptions ? windowOptions.height : null);
     }
 }

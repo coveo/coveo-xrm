@@ -1,4 +1,4 @@
-import { GlobalContext, IGlobalContext } from "./context/GlobalContext";
+import { IGlobalContext } from "./context/GlobalContext";
 import { INavigation } from "./navigation/Navigation";
 import { WebApiService } from "./WebApiService";
 

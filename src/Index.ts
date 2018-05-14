@@ -6,3 +6,4 @@ export { NavigationV8 } from "./navigation/NavigationV8";
 export { WebApiService } from "./WebApiService";
 
 export { CrmClient } from "./CrmClient";
+export { buildFormContext, IFormContext } from "./context/FormContextBuilder";

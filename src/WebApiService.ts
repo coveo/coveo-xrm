@@ -36,7 +36,7 @@ export class WebApiService {
     }
 
     executeQuery<T>(query: OData) {
-        return query.build<T>()
+        return query.build<T>();
     }
 
     private getODataEndpointVersion(): string {

@@ -1,8 +1,10 @@
 import { OData } from "coveo-odata";
 import { IClientContext, NullClientContext, ClientContext } from "./ClientContext";
+import { IUserSettings, UserSettings, UserSettingsV8, NullUserSettings } from "./Global/UserSettings";
 
 export interface IGlobalContext {
     client: IClientContext;
+    userSettings: IUserSettings;
 
     getClientUrl(): string;
     getCrmVersion(): string;
@@ -12,9 +14,14 @@ export interface IGlobalContext {
 
 export class NullGlobalContext implements IGlobalContext {
     clientContext = new NullClientContext();
+    innerUserSettings = new NullUserSettings();
 
     get client(): IClientContext {
         return this.clientContext;
+    }
+
+    get userSettings() {
+        return this.innerUserSettings;
     }
 
     getClientUrl(): string {
@@ -32,10 +39,20 @@ export class NullGlobalContext implements IGlobalContext {
 }
 
 export class GlobalContext implements IGlobalContext {
-    constructor(private context: Xrm.GlobalContext) {}
+    private innerUserSettings: IUserSettings;
+
+    constructor(private context: Xrm.GlobalContext) {
+        this.innerUserSettings = this.context.userSettings
+            ? new UserSettings(this.context.userSettings)
+            : new UserSettingsV8(this.context);
+    }
 
     get client(): IClientContext {
         return new ClientContext(this.context.client);
+    }
+
+    get userSettings(): IUserSettings {
+        return this.innerUserSettings;
     }
 
     getClientUrl(): string {

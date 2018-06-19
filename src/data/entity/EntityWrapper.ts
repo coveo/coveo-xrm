@@ -1,5 +1,6 @@
 export interface IEntity {
     getId: () => string;
+    getEntityName: () => string;
     save(saveMode?: Xrm.EntitySaveMode)
 }
 
@@ -8,6 +9,10 @@ export class EntityWrapper implements IEntity {
 
     getId() {
         return this.entity.getId();
+    }
+
+    getEntityName() {
+        return this.entity.getEntityName();
     }
 
     save(saveMode?: Xrm.EntitySaveMode) {

@@ -1,6 +1,6 @@
 {
   "name": "coveo-xrm",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "keywords": [
     "coveo",
@@ -25,7 +25,7 @@
   "devDependencies": {
     "@types/jasmine": "^2.8.4",
     "@types/xrm": "9.0.6",
-    "coveo-odata": "0.0.7",
+    "coveo-odata": "0.0.8",
     "istanbul-instrumenter-loader": "^3.0.0",
     "jasmine": "3.1.0",
     "jasmine-core": "3.1.0",

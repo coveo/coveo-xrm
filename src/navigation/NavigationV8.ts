@@ -4,6 +4,24 @@ export class NavigationV8 extends NullNavigation {
         super();
     }
 
+    openAlertDialog(alertStrings: Xrm.Navigation.AlertStrings, alertOptions: Xrm.Navigation.DialogSizeOptions) {
+        return new Promise<void>((resolve) => {
+            this.xrm.Utility.alertDialog(alertStrings.text, () => resolve());
+        });
+    }
+
+    openConfirmDialog(confirmStrings: Xrm.Navigation.ConfirmStrings, confirmOptions: Xrm.Navigation.DialogSizeOptions) {
+        return new Promise<Xrm.Navigation.ConfirmResult>((resolve) => {
+            this.xrm.Utility.confirmDialog(confirmStrings.text, () => resolve({confirmed: true}), () => resolve({confirmed: false}));
+        });
+    }
+
+    openErrorDialog(errorOptions: Xrm.Navigation.ErrorDialogOptions) {
+        return new Promise<void>((resolve) => {
+            this.xrm.Utility.alertDialog(`${errorOptions.errorCode}: ${errorOptions.message} ${errorOptions.details}`, () => resolve());
+        });
+    }
+
     openForm(options: Xrm.Navigation.EntityFormOptions, formParameters?: Xrm.Utility.FormOpenParameters): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             if (!options && !options.entityName) {

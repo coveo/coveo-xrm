@@ -50,7 +50,7 @@ export class Navigation implements INavigation {
         return new Promise<Xrm.Navigation.ConfirmResult>((resolve, reject) => {
             return this.xrm.Navigation
                 .openConfirmDialog(confirmStrings, confirmOptions)
-                .then(() => resolve(), error => reject(error));
+                .then((success) => resolve(success), error => reject(error));
         });
     }
 

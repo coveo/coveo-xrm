@@ -1,13 +1,19 @@
 {
     "compilerOptions": {
+        "declaration": true,
         "module": "commonjs",
+        "noUnusedLocals": true,
+        "noImplicitReturns": true,
+        "removeComments": true,
         "target": "es5",
         "sourceMap": true,
-        "declaration": true,
+        "alwaysStrict": true,
+        "experimentalDecorators": true,
         "lib": [
             "dom",
             "es5",
-            "es2015.promise"
+            "es2015",
+            "es2018.promise"
         ]
     }
 }

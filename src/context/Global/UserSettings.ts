@@ -46,11 +46,11 @@ export class UserSettings implements IUserSettings {
     constructor(private userSettings: Xrm.UserSettings) {}
 
     get securityRolePrivileges() {
-        return this.userSettings.securityRolePrivileges
+        return this.userSettings.securityRolePrivileges;
     }
 
     get securityRoles() {
-        return this.userSettings.securityRoles
+        return this.userSettings.securityRoles;
     }
 
     get userId() {

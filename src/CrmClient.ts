@@ -15,7 +15,8 @@ export class CrmClient {
         return this.navigation;
     }
 
-    constructor(private globalContext: IGlobalContext,
-                private webApi: WebApiService,
-                private navigation: INavigation) {}
+    constructor(
+        private readonly globalContext: IGlobalContext,
+        private readonly webApi: WebApiService,
+        private readonly navigation: INavigation) { }
 }

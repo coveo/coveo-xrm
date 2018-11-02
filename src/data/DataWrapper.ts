@@ -1,4 +1,4 @@
-import { IEntity, EntityWrapper } from "./entity/EntityWrapper";
+import { EntityWrapper, IEntity } from "./entity/EntityWrapper";
 
 export interface IXrmData {
     entity: IEntity;
@@ -13,7 +13,7 @@ export class DataWrapper implements IXrmData {
     }
 
     get entity() {
-        return this.innerEntity
+        return this.innerEntity;
     }
 
     refresh(save: boolean): Promise<void> {

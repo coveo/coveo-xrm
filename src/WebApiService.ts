@@ -1,4 +1,4 @@
-import { OData, Batch } from "coveo-odata";
+import { Batch, OData } from "coveo-odata";
 import { IGlobalContext } from "./context/GlobalContext";
 
 export class WebApiService {

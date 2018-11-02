@@ -14,8 +14,10 @@
   "main": "bin/js/coveo-xrm.min.js",
   "types": "bin/js/src/Index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "npm run ts && webpack",
     "test": "karma start --single-run",
+    "ts": "npm run lint && node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit --preserveWatchOutput --skipLibCheck",
+    "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
     "test:watch": "karma start",
     "test:browser": "karma start --browsers=Chrome",
     "publish": "npm publish --access=public"
@@ -38,6 +40,7 @@
     "karma-typescript": "^3.0.13",
     "karma-webpack": "3.0.0",
     "ts-loader": "4.4.1",
+    "tslint": "5.10.0",
     "typescript": "3.0.1",
     "webpack": "4.16.4",
     "webpack-cli": "3.1.0"

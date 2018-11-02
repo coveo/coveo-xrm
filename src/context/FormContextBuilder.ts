@@ -1,7 +1,7 @@
-import { IUI, UIWrapper } from "../ui/UIWrapper";
-import { IXrmData, DataWrapper } from "../data/DataWrapper";
+import { DataWrapper, IXrmData } from "../data/DataWrapper";
 import { NullData } from "../data/NullData";
 import { NullUI } from "../ui/NullUI";
+import { IUI, UIWrapper } from "../ui/UIWrapper";
 
 export interface IFormContext {
     ui: IUI;
@@ -72,4 +72,4 @@ export const buildFormContext =
         return formContext
             ? new FormContext(formContext)
             : new NullFormContext();
-    }
+    };

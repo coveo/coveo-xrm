@@ -1,5 +1,6 @@
 import { ClientContext, IClientContext, NullClientContext } from "./ClientContext";
 import { IUserSettings, NullUserSettings, UserSettings, UserSettingsV8 } from "./Global/UserSettings";
+import { IOrganization, Organization } from "./Organization";
 
 export interface IGlobalContext {
     client: IClientContext;
@@ -9,66 +10,82 @@ export interface IGlobalContext {
     getCrmVersion(): string;
     getCurrentAppUrl(): string;
     getOrgUniqueName(): string;
+    getOrganization(): IOrganization;
 }
 
-export class NullGlobalContext implements IGlobalContext {
-    clientContext = new NullClientContext();
-    innerUserSettings = new NullUserSettings();
+abstract class Context<TClientContext extends IClientContext> {
+    protected constructor(
+        protected readonly clientContext: TClientContext,
+        protected readonly innerUserSettings: IUserSettings) { }
 
-    get client(): IClientContext {
-        return this.clientContext;
-    }
+    get client(): IClientContext { return this.clientContext; }
+    get userSettings() { return this.userSettings; }
+}
 
-    get userSettings() {
-        return this.innerUserSettings;
+interface INullGlobalContextOptions {
+    readonly clientUrl: string;
+    readonly crmVersion: string;
+    readonly appUrl: string;
+    readonly orgUniqueName: string;
+}
+
+export class NullGlobalContext extends Context<NullClientContext> implements IGlobalContext {
+    constructor(private readonly options?: INullGlobalContextOptions) {
+        super(new NullClientContext(), new NullUserSettings());
+        const defaultOptions: INullGlobalContextOptions = {
+            clientUrl: "./",
+            crmVersion: "8.0",
+            appUrl: "/",
+            orgUniqueName: "Fake Org"
+        };
+        this.options = { ...defaultOptions, ...options };
     }
 
     getClientUrl(): string {
-        return "./";
+        return this.options.clientUrl;
     }
     getCrmVersion(): string {
-        return "8.0";
+        return this.options.crmVersion;
     }
     getCurrentAppUrl(): string {
-        return "/";
+        return this.options.appUrl;
     }
     getOrgUniqueName(): string {
-        return "Fake Org";
+        return this.options.orgUniqueName;
+    }
+    getOrganization(): IOrganization {
+        const settings: Partial<Xrm.OrganizationSettings> = {
+            uniqueName: this.getOrgUniqueName()
+        };
+        return new Organization(this.getClientUrl(), settings as Xrm.OrganizationSettings);
     }
 }
 
-export class GlobalContext implements IGlobalContext {
-    private innerUserSettings: IUserSettings;
-
-    constructor(private context: Xrm.GlobalContext) {
-        this.innerUserSettings = this.context.userSettings
-            ? new UserSettings(this.context.userSettings)
-            : new UserSettingsV8(this.context);
-    }
-
-    get client(): IClientContext {
-        return new ClientContext(this.context.client);
-    }
-
-    get userSettings(): IUserSettings {
-        return this.innerUserSettings;
+export class GlobalContext extends Context<ClientContext> implements IGlobalContext {
+    constructor(private readonly xrmContext: Xrm.GlobalContext) {
+        super(
+            new ClientContext(xrmContext.client),
+            xrmContext.userSettings
+                ? new UserSettings(xrmContext.userSettings)
+                : new UserSettingsV8(xrmContext));
     }
 
     getClientUrl(): string {
-        return this.context.getClientUrl();
+        return this.xrmContext.getClientUrl();
     }
-
     getCrmVersion(): string {
-        return this.context.getVersion();
+        return this.xrmContext.getVersion();
     }
-
     getCurrentAppUrl(): string {
-        return this.context.getCurrentAppUrl
-            ? this.context.getCurrentAppUrl()
-            : this.context.getClientUrl();
+        return this.xrmContext.getCurrentAppUrl
+            ? this.xrmContext.getCurrentAppUrl()
+            : this.xrmContext.getClientUrl();
     }
-
     getOrgUniqueName(): string {
-        return this.context.getOrgUniqueName();
+        return this.xrmContext.getOrgUniqueName();
+    }
+    getOrganization(): IOrganization {
+        const orgSettings: Xrm.OrganizationSettings = this.xrmContext.organizationSettings;
+        return new Organization(this.getClientUrl(), orgSettings);
     }
 }

@@ -1,7 +1,7 @@
 const discoveryUrlPrefix = "disco";
 
 export interface IOrganization extends Xrm.OrganizationSettings {
-    readonly url: string;
+    readonly clientUrl: string;
     readonly name: string;
     getDiscoveryUrl(): string;
 }
@@ -26,7 +26,7 @@ export class Organization implements IOrganization {
     public readonly uniqueName: string;
     public readonly useSkypeProtocol: boolean;
 
-    constructor(public readonly url: string, settings: Xrm.OrganizationSettings) {
+    constructor(public readonly clientUrl: string, settings: Xrm.OrganizationSettings, private readonly discoveryUrl?: string) {
         Object.assign(this, settings);
         this.attributes = (settings as any).attributes || {};
     }
@@ -34,8 +34,12 @@ export class Organization implements IOrganization {
     get name(): string { return this.attributes.name; }
 
     public getDiscoveryUrl(): string {
-        return this.url && this.name
-            ? this.url.replace(this.name, discoveryUrlPrefix)
-            : this.url;
+        return this.discoveryUrl || this.getDefaultDiscoveryUrl();
+    }
+
+    private getDefaultDiscoveryUrl(): string {
+        return this.clientUrl && this.name
+            ? this.clientUrl.replace(this.name, discoveryUrlPrefix)
+            : this.clientUrl;
     }
 }

@@ -10,7 +10,7 @@ export interface IGlobalContext {
     getCrmVersion(): string;
     getCurrentAppUrl(): string;
     getOrgUniqueName(): string;
-    getOrganization(): IOrganization;
+    getOrganization(orgDiscoveryUrl?: string): IOrganization;
 }
 
 abstract class Context<TClientContext extends IClientContext> {
@@ -53,11 +53,11 @@ export class NullGlobalContext extends Context<NullClientContext> implements IGl
     getOrgUniqueName(): string {
         return this.options.orgUniqueName;
     }
-    getOrganization(): IOrganization {
+    getOrganization(orgDiscoveryUrl?: string): IOrganization {
         const settings: Partial<Xrm.OrganizationSettings> = {
             uniqueName: this.getOrgUniqueName()
         };
-        return new Organization(this.getClientUrl(), settings as Xrm.OrganizationSettings);
+        return new Organization(this.getClientUrl(), settings as Xrm.OrganizationSettings, orgDiscoveryUrl);
     }
 }
 
@@ -84,8 +84,8 @@ export class GlobalContext extends Context<ClientContext> implements IGlobalCont
     getOrgUniqueName(): string {
         return this.xrmContext.getOrgUniqueName();
     }
-    getOrganization(): IOrganization {
+    getOrganization(orgDiscoveryUrl?: string): IOrganization {
         const orgSettings: Xrm.OrganizationSettings = this.xrmContext.organizationSettings;
-        return new Organization(this.getClientUrl(), orgSettings);
+        return new Organization(this.getClientUrl(), orgSettings, orgDiscoveryUrl);
     }
 }

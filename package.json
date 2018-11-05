@@ -20,7 +20,7 @@
     "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
     "test:watch": "karma start",
     "test:browser": "karma start --browsers=Chrome",
-    "publish": "npm publish --access=public"
+    "publish": "npm run build && npm publish --access=public"
   },
   "author": "Coveo",
   "license": "MIT",

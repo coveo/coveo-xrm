@@ -1,4 +1,5 @@
 export { GlobalContext, NullGlobalContext, IGlobalContext } from "./context/GlobalContext";
+export { IOrganization } from "./context/Organization";
 export { IUserSettings, NullUserSettings, UserSettingsV8, UserSettings } from "./context/Global/UserSettings";
 
 export { Navigation, NullNavigation, INavigation } from "./navigation/Navigation";

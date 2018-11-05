@@ -3,7 +3,7 @@ const discoveryUrlPrefix = "disco";
 export interface IOrganization extends Xrm.OrganizationSettings {
     readonly url: string;
     readonly name: string;
-    getDiscoveryUrl(url?: string): string;
+    getDiscoveryUrl(): string;
 }
 
 interface IOrganizationAttributes {
@@ -33,9 +33,9 @@ export class Organization implements IOrganization {
 
     get name(): string { return this.attributes.name; }
 
-    public getDiscoveryUrl(url: string = this.url): string {
-        return url && this.name
-            ? url.replace(this.name, discoveryUrlPrefix)
-            : url;
+    public getDiscoveryUrl(): string {
+        return this.url && this.name
+            ? this.url.replace(this.name, discoveryUrlPrefix)
+            : this.url;
     }
 }

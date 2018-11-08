@@ -32,13 +32,8 @@
       "jsdoc-format": true,
       "jsx-alignment": false,
       "jsx-boolean-value": false,
-      "jsx-key": true,
       "jsx-no-bind": false,
       "jsx-no-lambda": false,
-      "jsx-no-multiline-js": true,
-      "jsx-no-string-ref": true,
-      "jsx-self-close": true,
-      "jsx-wrap-multiline": true,
       "max-line-length": [
         false,
         140

@@ -10,14 +10,19 @@
     "typescript",
     "xrm"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coveo/coveo-xrm"
+  },
   "homepage": "https://github.com/coveo/coveo-xrm",
   "main": "bin/js/coveo-xrm.min.js",
   "types": "bin/js/src/Index.d.ts",
   "scripts": {
+    "setup": "npm install && npm run build",
     "build": "npm run ts && webpack",
-    "test": "karma start --single-run",
     "ts": "npm run lint && node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit --preserveWatchOutput --skipLibCheck",
     "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
+    "test": "karma start --single-run",
     "test:watch": "karma start",
     "test:browser": "karma start --browsers=Chrome",
     "publish": "npm run build && npm publish --access=public"

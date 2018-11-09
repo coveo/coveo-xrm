@@ -18,7 +18,7 @@
   "main": "bin/js/coveo-xrm.min.js",
   "types": "bin/js/src/Index.d.ts",
   "scripts": {
-    "setup": "npm install && npm run build",
+    "setup": "npm install",
     "build": "npm run ts && webpack",
     "ts": "npm run lint && node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit --preserveWatchOutput --skipLibCheck",
     "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
@@ -28,11 +28,15 @@
   "license": "MIT",
   "devDependencies": {
     "@types/xrm": "9.0.7",
+    "@types/url-parse": "^1.4.1",
     "coveo-odata": "0.1.4",
     "ts-loader": "4.4.1",
     "tslint": "5.11.0",
     "typescript": "3.1.6",
     "webpack": "4.25.1",
     "webpack-cli": "3.1.2"
+  },
+  "dependencies": {
+    "url-parse": "^1.4.4"
   }
 }

@@ -1,45 +1,66 @@
-const discoveryUrlPrefix = "disco";
+import * as Url from "url-parse";
 
 export interface IOrganization extends Xrm.OrganizationSettings {
-    readonly clientUrl: string;
-    readonly name: string;
+    getClientUrl(): string;
+    getName(): string;
+    getDiscoveryOriginUrl(): string;
     getDiscoveryUrl(): string;
-}
-
-interface IOrganizationAttributes {
-    readonly name: string;
 }
 
 /**
  * Decorates the current organization settings with more detailed information.
- * @param settings Current organization settings.
  * @see {@link https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/clientapi/reference/xrm-utility/getglobalcontext/organizationsettings }.
  */
 export class Organization implements IOrganization {
-    private readonly attributes: IOrganizationAttributes;
+    private readonly _clientUrl: Url;
 
-    public readonly baseCurrencyId: string;
-    public readonly defaultCountryCode: string;
-    public readonly isAutoSaveEnabled: boolean;
-    public readonly languageId: number;
-    public readonly organizationId: string;
-    public readonly uniqueName: string;
-    public readonly useSkypeProtocol: boolean;
-
-    constructor(public readonly clientUrl: string, settings: Xrm.OrganizationSettings, private readonly discoveryUrl?: string) {
-        Object.assign(this, settings);
-        this.attributes = (settings as any).attributes || {};
+    constructor(clientUrl: string, private readonly _settings: Xrm.OrganizationSettings) {
+        if (clientUrl) {
+            this._clientUrl = new Url(clientUrl);
+        } else {
+            const locationUrl: Url = new Url(location.href);
+            this._clientUrl = new Url(locationUrl.origin);
+        }
     }
 
-    get name(): string { return this.attributes.name; }
+    get baseCurrencyId(): string { return this._settings.baseCurrencyId; }
+    get defaultCountryCode(): string { return this._settings.defaultCountryCode; }
+    get languageId(): number { return this._settings.languageId; }
+    get organizationId(): string { return this._settings.organizationId; }
+    get uniqueName(): string { return this._settings.uniqueName; }
+    get isAutoSaveEnabled(): boolean { return this._settings.isAutoSaveEnabled; }
+    get useSkypeProtocol(): boolean { return this._settings.useSkypeProtocol; }
 
-    public getDiscoveryUrl(): string {
-        return this.discoveryUrl || this.getDefaultDiscoveryUrl();
+    getClientUrl(): string {
+        return this._clientUrl.toString();
     }
 
-    private getDefaultDiscoveryUrl(): string {
-        return this.clientUrl && this.name
-            ? this.clientUrl.replace(this.name, discoveryUrlPrefix)
-            : this.clientUrl;
+    getDiscoveryOriginUrl(): string {
+        const discoUrl: string = this.getDiscoveryUrl();
+        return discoUrl ? new Url(discoUrl).origin : undefined;
+    }
+
+    /**
+     * Returns the discovery url associated to the organization.
+     * @see {@link https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/org-service/discover-url-organization-organization-service }.
+     */
+    getDiscoveryUrl(): string {
+        const subpath: string = this.getClientUrlHostnameSubpath();
+        return subpath ? `https://disco.${subpath}/XRMServices/2011/Discovery.svc` : undefined;
+    }
+
+    getName(): string {
+        const subpath: string = this.getClientUrlHostnameSubpath();
+        return subpath
+            ? this._clientUrl.hostname.replace(`.${subpath}`, "")
+            : undefined;
+    }
+
+    private getClientUrlHostnameSubpath(): string {
+        const hostname: string = this._clientUrl.hostname;
+        const index: number = hostname.indexOf(".");
+        return index > 0 && index < hostname.length - 1
+            ? hostname.substring(index + 1)
+            : undefined;
     }
 }

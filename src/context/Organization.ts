@@ -45,18 +45,18 @@ export class Organization implements IOrganization {
      * @see {@link https://docs.microsoft.com/en-us/dynamics365/customer-engagement/developer/org-service/discover-url-organization-organization-service }.
      */
     getDiscoveryUrl(): string {
-        const subpath: string = this.getClientUrlHostnameSubpath();
-        return subpath ? `https://disco.${subpath}/XRMServices/2011/Discovery.svc` : undefined;
+        const region: string = this.getRegionHostName();
+        return region ? `https://disco.${region}/XRMServices/2011/Discovery.svc` : undefined;
     }
 
     getName(): string {
-        const subpath: string = this.getClientUrlHostnameSubpath();
-        return subpath
-            ? this._clientUrl.hostname.replace(`.${subpath}`, "")
+        const region: string = this.getRegionHostName();
+        return region
+            ? this._clientUrl.hostname.replace(`.${region}`, "")
             : undefined;
     }
 
-    private getClientUrlHostnameSubpath(): string {
+    private getRegionHostName(): string {
         const hostname: string = this._clientUrl.hostname;
         const index: number = hostname.indexOf(".");
         return index > 0 && index < hostname.length - 1

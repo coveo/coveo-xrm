@@ -22,7 +22,7 @@
     "build": "npm run ts && webpack",
     "ts": "npm run lint && node ./node_modules/typescript/bin/tsc --project tsconfig.json --noEmit --preserveWatchOutput --skipLibCheck",
     "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
-    "publish": "npm run build && npm publish --access=public"
+    "publish": "npm run setup && npm run build && npm publish --access=public"
   },
   "author": "Coveo",
   "license": "MIT",

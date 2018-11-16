@@ -1,7 +1,9 @@
 {
   "name": "coveo-xrm",
   "version": "0.4.1",
-  "description": "",
+  "author": "Coveo",
+  "license": "MIT",
+  "description": "Wrapper around the Dynamics client API that adapts the implementation from different versions of Dynamics.",
   "keywords": [
     "coveo",
     "odata",
@@ -24,8 +26,6 @@
     "lint": "node node_modules/tslint/bin/tslint -c tslint.json 'src/**/*.ts'",
     "publish": "npm run setup && npm run build && npm publish --access=public"
   },
-  "author": "Coveo",
-  "license": "MIT",
   "devDependencies": {
     "@types/xrm": "9.0.7",
     "@types/url-parse": "^1.4.1",

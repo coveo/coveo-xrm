@@ -5,7 +5,6 @@ import { IOrganization, Organization } from "./Organization";
 export interface IGlobalContext {
     client: IClientContext;
     userSettings: IUserSettings;
-
     getClientUrl(): string;
     getCrmVersion(): string;
     getCurrentAppUrl(): string;
@@ -73,20 +72,23 @@ export class GlobalContext extends Context<ClientContext> implements IGlobalCont
     getClientUrl(): string {
         return this.xrmContext.getClientUrl();
     }
+
     getCrmVersion(): string {
         return this.xrmContext.getVersion();
     }
+
     getCurrentAppUrl(): string {
         return this.xrmContext.getCurrentAppUrl
             ? this.xrmContext.getCurrentAppUrl()
             : this.xrmContext.getClientUrl();
     }
+
     getOrgUniqueName(): string {
         return this.xrmContext.getOrgUniqueName();
     }
+
     getOrganization(): IOrganization {
         const orgSettings: Xrm.OrganizationSettings = this.xrmContext.organizationSettings || {} as any;
-        orgSettings.uniqueName = this.getOrgUniqueName();
         return new Organization(this.getClientUrl(), orgSettings);
     }
 }

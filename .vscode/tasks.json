@@ -10,7 +10,10 @@
                 "$tsc",
                 "$tslint5"
             ],
-            "group": "build"
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "type": "npm",

@@ -18,7 +18,7 @@ abstract class Context<TClientContext extends IClientContext> {
         protected readonly innerUserSettings: IUserSettings) { }
 
     get client(): IClientContext { return this.clientContext; }
-    get userSettings() { return this.userSettings; }
+    get userSettings() { return this.innerUserSettings; }
 }
 
 interface INullGlobalContextOptions {

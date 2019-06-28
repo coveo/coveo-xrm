@@ -1,6 +1,6 @@
 {
   "name": "coveo-xrm",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "author": "Coveo",
   "license": "MIT",
   "description": "Wrapper around the Dynamics client API that adapts the implementation from different versions of Dynamics.",
